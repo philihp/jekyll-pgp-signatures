@@ -4,25 +4,18 @@ require "jekyll"
 
 module Jekyll
   module PgpSignatures
-    # Internal requires
     autoload :VERSION, "jekyll-pgp-signatures/version"
 
-    class UpcaseConverter < Converter
-      safe true
-      priority :low
-  
-      def matches(ext)
-        ext =~ /^\.asc$/i
+    class PgpSignatureTag < Liquid::Tag
+      def render(context)
+        url = context.environments.first['page']['path']
+        file = File.basename(url)
+        if File.exist?(File.join(Dir.pwd, 'assets', 'sigs', "#{file}.asc"))
+          %Q{<a href="/assets/sigs/#{file}.asc" class="verified">Verified</a>}
+        end
       end
-  
-      def output_ext(ext)
-        ".asc"
-      end
-  
-      def convert(content)
-        content
-      end
+      Liquid::Template.register_tag "pgp_signature", self
     end
-
+    
   end
 end
