@@ -1,4 +1,8 @@
 source "https://rubygems.org"
 gemspec
 
-gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
+gem "jekyll"
+
+gem "rake", "~> 13.0"
+
+gem "rspec", "~> 3.0"

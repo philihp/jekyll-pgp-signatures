@@ -7,17 +7,21 @@ Gem::Specification.new do |spec|
   spec.version       = Jekyll::PgpSignatures::VERSION
   spec.authors       = ["Philihp Busby"]
   spec.email         = ["philihp@gmail.com"]
-  spec.summary       = %q{Textile converter for Jekyll.}
-  spec.homepage      = "https://github.com/philihp/jekyll-pgp-signatures"
-  spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.summary       = "Serves armored PGP files in Jekyll"
+  spec.description   = "Serve colocated PGP signatures of your markdown and html posts"
+  spec.homepage      = "https://philihp.com/jekyll-pgp-signatures"
+  spec.license       = "MIT"
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
+
+  spec.metadata["homepage_uri"] = spec.homepage
+
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
+  end
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "jekyll", ENV["JEKYLL_VERSION"] ? "~> #{ENV["JEKYLL_VERSION"]}" : ">= 2.0"
+
 end
